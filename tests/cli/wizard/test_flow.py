@@ -3220,8 +3220,8 @@ def test_credential_line_for_saved_summary_ollama_host_verified() -> None:
     )
 
 
-def test_run_wizard_defaults_to_focused_openai_when_provider_is_missing(monkeypatch) -> None:
-    """A missing saved provider defaults to the focused OpenAI setup choice."""
+def test_run_wizard_defaults_to_focused_aimlapi_when_provider_is_missing(monkeypatch) -> None:
+    """A missing saved provider defaults to the focused AI/ML API setup choice."""
     # Arrange
     monkeypatch.setattr(
         flow,
@@ -3243,7 +3243,37 @@ def test_run_wizard_defaults_to_focused_openai_when_provider_is_missing(monkeypa
         flow.run_wizard()
 
     # Assert
-    assert seen["default"] == "openai"
+    assert seen["default"] == "aimlapi"
+
+
+@pytest.mark.parametrize(
+    ("saved_provider", "expected_default"),
+    [("openai", "openai"), ("openrouter", "openrouter"), ("anthropic", "__other_llm_provider__")],
+)
+def test_run_wizard_keeps_saved_provider_preselected(
+    monkeypatch, saved_provider: str, expected_default: str
+) -> None:
+    """Re-running onboarding keeps an existing provider instead of the new default."""
+    monkeypatch.setattr(
+        flow,
+        "local_defaults",
+        lambda: {"provider": saved_provider, "model": "", "wizard_mode": "", "auth_method": None},
+    )
+    seen: dict[str, object] = {}
+
+    def _capture_choose(_prompt, _choices, default=None, **_kwargs):
+        seen["default"] = default
+        raise KeyboardInterrupt
+
+    monkeypatch.setattr(flow, "confirm", lambda *_a, **_k: True)  # "Change provider?"
+    monkeypatch.setattr(flow, "choose", _capture_choose)
+    monkeypatch.setattr(flow, "render_header", lambda: None)
+    monkeypatch.setattr(flow, "step_header", lambda *_a, **_k: None)
+
+    with pytest.raises(KeyboardInterrupt):
+        flow.run_wizard()
+
+    assert seen["default"] == expected_default
 
 
 def test_run_wizard_blank_llm_key_defers_setup_instead_of_ending(monkeypatch, tmp_path) -> None:

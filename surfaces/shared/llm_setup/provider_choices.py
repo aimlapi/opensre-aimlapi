@@ -4,8 +4,9 @@ from __future__ import annotations
 
 from surfaces.shared.llm_setup.catalog import PROVIDER_BY_VALUE, SUPPORTED_PROVIDERS, ProviderOption
 
-FOCUSED_SETUP_PROVIDER_VALUES: tuple[str, ...] = ("claude-code", "openai", "openrouter")
-DEFAULT_SETUP_PROVIDER_VALUE = "openai"
+FOCUSED_SETUP_PROVIDER_VALUES: tuple[str, ...] = ("aimlapi", "claude-code", "openai", "openrouter")
+# Preselected only when nothing is saved yet; a saved provider always wins.
+DEFAULT_SETUP_PROVIDER_VALUE = "aimlapi"
 OTHER_PROVIDER_SELECTION = "__other_llm_provider__"
 
 

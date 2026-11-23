@@ -10,7 +10,8 @@ from surfaces.shared.llm_setup.provider_choices import (
 def test_onboarding_provider_options_put_focused_choices_first() -> None:
     values = [provider.value for provider in flow._onboarding_provider_options()]
 
-    assert values[:3] == list(FOCUSED_SETUP_PROVIDER_VALUES)
+    assert values[: len(FOCUSED_SETUP_PROVIDER_VALUES)] == list(FOCUSED_SETUP_PROVIDER_VALUES)
+    assert values[0] == "aimlapi"
     assert "anthropic" in values
     assert "openai" in values
     assert len(values) == len(set(values))

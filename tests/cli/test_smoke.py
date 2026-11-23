@@ -662,7 +662,8 @@ def test_onboard_interactive_smoke(
         cli_sandbox,
         "onboard",
         actions=[
-            PtyAction(expect="Choose your LLM provider", send=b"\r"),
+            # AI/ML API is preselected; move down past Claude Code to OpenAI.
+            PtyAction(expect="Choose your LLM provider", send=b"\r", stagger_j=2),
             # #3591: the model is picked BEFORE the credential, so the live probe runs
             # against the model that actually gets persisted.
             PtyAction(expect="Choose OpenAI model", send=b"\r"),
@@ -757,7 +758,8 @@ def test_onboard_interactive_smoke_cli_provider_repick_when_unauthenticated(
         "Model",
     )
     actions = [
-        PtyAction(expect="Choose your LLM provider", send=b"\r", stagger_j=2),
+        # Default is the first focused choice; "Other" is the last row.
+        PtyAction(expect="Choose your LLM provider", send=b"\r", stagger_j=4),
         PtyAction(
             expect="Choose another LLM provider",
             send=b"\r",
@@ -771,7 +773,7 @@ def test_onboard_interactive_smoke_cli_provider_repick_when_unauthenticated(
             stagger_j=1,
             timeout=90.0,
         ),
-        PtyAction(expect="Choose your LLM provider", send=b"\r"),
+        PtyAction(expect="Choose your LLM provider", send=b"\r", stagger_j=2),
         # #3591: the model is chosen BEFORE the credential, so the live probe
         # runs against the model that gets persisted. Same order as
         # test_onboard_interactive_smoke: model -> key -> recovery menu.
