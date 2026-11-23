@@ -43,6 +43,7 @@ from surfaces.cli.wizard.components import (
 from surfaces.cli.wizard.endpoint_prompt import (
     ensure_endpoint_settings as ensure_provider_endpoint_settings,
 )
+from surfaces.shared.llm_setup.auth_profiles import api_key_setup_url
 from surfaces.shared.llm_setup.catalog import (
     PROJECT_ENV_PATH,
     ProviderOption,
@@ -359,6 +360,9 @@ def _prompt_validated_llm_credential(
     # a failed probe should re-prompt the endpoint too (a wrong base URL is the
     # usual cause). Only Azure additionally does live deployment discovery.
     needs_endpoint = is_azure or is_custom_provider(provider.value)
+    setup_url = api_key_setup_url(provider.value)
+    if setup_url:
+        console.print(f"[{SECONDARY}]  Get a key at {setup_url}[/]")
     for _attempt in range(_LLM_CREDENTIAL_MAX_ATTEMPTS):
         try:
             value = prompt_value(

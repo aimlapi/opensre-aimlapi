@@ -777,6 +777,7 @@ _PROVIDER_LABEL_OVERRIDES = {
     "OPENAI_API_KEY": "OpenAI",
     "OPENROUTER_API_KEY": "OpenRouter",
     "TRUSTEDROUTER_API_KEY": "TrustedRouter",
+    "AIMLAPI_API_KEY": "AI/ML API",
     "MINIMAX_API_KEY": "MiniMax",
 }
 

@@ -33,6 +33,9 @@ from config.llm_auth.provider_catalog import (
     SUPPORTED_PROVIDER_VALUES,
 )
 from config.llm_models import (
+    AIMLAPI_CLASSIFICATION_MODEL,
+    AIMLAPI_REASONING_MODEL,
+    AIMLAPI_TOOLCALL_MODEL,
     ANTHROPIC_CLASSIFICATION_MODEL,
     ANTHROPIC_REASONING_MODEL,
     ANTHROPIC_TOOLCALL_MODEL,
@@ -113,6 +116,7 @@ LLMProvider = Literal[
     "openai",
     "openrouter",
     "trustedrouter",
+    "aimlapi",
     "deepseek",
     "gemini",
     "nvidia",
@@ -235,6 +239,7 @@ class LLMSettings(StrictConfigModel):
     openai_api_key: str = ""
     openrouter_api_key: str = ""
     trustedrouter_api_key: str = ""
+    aimlapi_api_key: str = ""
     deepseek_api_key: str = ""
     gemini_api_key: str = ""
     nvidia_api_key: str = ""
@@ -257,6 +262,9 @@ class LLMSettings(StrictConfigModel):
     trustedrouter_reasoning_model: str = TRUSTEDROUTER_REASONING_MODEL
     trustedrouter_classification_model: str = TRUSTEDROUTER_CLASSIFICATION_MODEL
     trustedrouter_toolcall_model: str = TRUSTEDROUTER_TOOLCALL_MODEL
+    aimlapi_reasoning_model: str = AIMLAPI_REASONING_MODEL
+    aimlapi_classification_model: str = AIMLAPI_CLASSIFICATION_MODEL
+    aimlapi_toolcall_model: str = AIMLAPI_TOOLCALL_MODEL
     deepseek_reasoning_model: str = DEEPSEEK_REASONING_MODEL
     deepseek_classification_model: str = DEEPSEEK_CLASSIFICATION_MODEL
     deepseek_toolcall_model: str = DEEPSEEK_TOOLCALL_MODEL

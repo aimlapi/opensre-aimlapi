@@ -75,6 +75,18 @@ Want credentials only from the environment, never on disk? Set
 
   </Accordion>
 
+  <Accordion title="AI/ML API">
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `AIMLAPI_API_KEY` |  | API key for AI/ML API |
+| `AIMLAPI_MODEL` |  | Shared model for all tasks |
+| `AIMLAPI_REASONING_MODEL` |  | Override model for reasoning |
+| `AIMLAPI_TOOLCALL_MODEL` |  | Override model for tool calling |
+
+
+  </Accordion>
+
   <Accordion title="DeepSeek">
 
 | Variable | Default | Description |
@@ -841,6 +853,7 @@ If you don't set these, OpenSRE falls back to the reasoning model (or the provid
 | `OPENAI_CLASSIFICATION_MODEL` | | OpenAI classification model |
 | `OPENROUTER_CLASSIFICATION_MODEL` | | OpenRouter classification model |
 | `TRUSTEDROUTER_CLASSIFICATION_MODEL` | | TrustedRouter classification model |
+| `AIMLAPI_CLASSIFICATION_MODEL` | | AI/ML API classification model |
 | `DEEPSEEK_CLASSIFICATION_MODEL` | | DeepSeek classification model |
 | `GEMINI_CLASSIFICATION_MODEL` | | Gemini classification model |
 | `NVIDIA_CLASSIFICATION_MODEL` | | NVIDIA classification model |

@@ -47,6 +47,7 @@ DEFAULT_OLLAMA_HOST = "http://localhost:11434"
 
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 TRUSTEDROUTER_BASE_URL = "https://api.trustedrouter.com/v1"
+AIMLAPI_BASE_URL = "https://api.aimlapi.com/v1"
 DEEPSEEK_BASE_URL = "https://api.deepseek.com"
 GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai/"
 NVIDIA_BASE_URL = "https://integrate.api.nvidia.com/v1"
@@ -83,6 +84,14 @@ PROVIDER_MODEL_DEFAULTS: dict[str, ProviderModelDefaults] = {
         classification="trustedrouter/auto",
         toolcall="trustedrouter/auto",
         base_url=TRUSTEDROUTER_BASE_URL,
+    ),
+    "aimlapi": ProviderModelDefaults(
+        provider="aimlapi",
+        settings_key="aimlapi",
+        reasoning="openai/gpt-5.4-mini",
+        classification="openai/gpt-5.4-mini",
+        toolcall="openai/gpt-5.4-mini",
+        base_url=AIMLAPI_BASE_URL,
     ),
     "deepseek": ProviderModelDefaults(
         provider="deepseek",
@@ -203,6 +212,10 @@ TRUSTEDROUTER_REASONING_MODEL = _defaults("trustedrouter").reasoning
 TRUSTEDROUTER_CLASSIFICATION_MODEL = _defaults("trustedrouter").classification
 TRUSTEDROUTER_TOOLCALL_MODEL = _defaults("trustedrouter").toolcall
 
+AIMLAPI_REASONING_MODEL = _defaults("aimlapi").reasoning
+AIMLAPI_CLASSIFICATION_MODEL = _defaults("aimlapi").classification
+AIMLAPI_TOOLCALL_MODEL = _defaults("aimlapi").toolcall
+
 DEEPSEEK_REASONING_MODEL = _defaults("deepseek").reasoning
 DEEPSEEK_CLASSIFICATION_MODEL = _defaults("deepseek").classification
 DEEPSEEK_TOOLCALL_MODEL = _defaults("deepseek").toolcall
@@ -249,6 +262,7 @@ ANTHROPIC_LLM_CONFIG = model_config_for("anthropic")
 OPENAI_LLM_CONFIG = model_config_for("openai")
 OPENROUTER_LLM_CONFIG = model_config_for("openrouter")
 TRUSTEDROUTER_LLM_CONFIG = model_config_for("trustedrouter")
+AIMLAPI_LLM_CONFIG = model_config_for("aimlapi")
 DEEPSEEK_LLM_CONFIG = model_config_for("deepseek")
 GROQ_LLM_CONFIG = model_config_for("groq")
 AZURE_OPENAI_LLM_CONFIG = model_config_for("azure-openai")
@@ -262,6 +276,11 @@ VERTEX_AI_LLM_CONFIG = model_config_for("vertex-ai")
 OLLAMA_LLM_CONFIG = model_config_for("ollama")
 
 __all__ = [
+    "AIMLAPI_BASE_URL",
+    "AIMLAPI_CLASSIFICATION_MODEL",
+    "AIMLAPI_LLM_CONFIG",
+    "AIMLAPI_REASONING_MODEL",
+    "AIMLAPI_TOOLCALL_MODEL",
     "ANTHROPIC_CLASSIFICATION_MODEL",
     "ANTHROPIC_LLM_CONFIG",
     "ANTHROPIC_REASONING_MODEL",

@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from enum import StrEnum
 
 from config.constants.llm import (
+    AIMLAPI_API_KEY_ENV,
     AZURE_OPENAI_API_KEY_ENV,
     AZURE_OPENAI_API_VERSION_ENV,
     AZURE_OPENAI_BASE_URL_ENV,
@@ -19,6 +20,7 @@ from config.constants.llm import (
 from config.llm_auth.provider_catalog import CredentialKind, require_provider_spec
 from config.llm_auth.subscriptions import SUBSCRIPTION_PROVIDERS
 from config.llm_models import (
+    AIMLAPI_REASONING_MODEL,
     ANTHROPIC_REASONING_MODEL,
     AZURE_OPENAI_REASONING_MODEL,
     BEDROCK_REASONING_MODEL,
@@ -230,6 +232,24 @@ TRUSTEDROUTER_MODELS = (
     ModelOption(value="google/gemini-3.1-pro", label="Gemini 3.1 Pro (via TrustedRouter)"),
     ModelOption(value="deepseek/deepseek-v4-pro", label="DeepSeek V4 Pro (via TrustedRouter)"),
     ModelOption(value="z-ai/glm-4.7", label="GLM 4.7 (via TrustedRouter)"),
+)
+
+# Source: https://api.aimlapi.com/v1/models?include=all (rows with
+# ``type=openai/chat-completions`` that list ``tools`` and ``streaming``).
+# AI/ML API ids are namespaced by vendor (``openai/gpt-5.4-mini``).
+AIMLAPI_MODELS = (
+    ModelOption(value=AIMLAPI_REASONING_MODEL, label="GPT-5.4 mini (via AI/ML API)"),
+    ModelOption(value="openai/gpt-6.1-sol", label="GPT-6.1 Sol (via AI/ML API)"),
+    ModelOption(value="anthropic/claude-sonnet-5.5", label="Claude Sonnet 5.5 (via AI/ML API)"),
+    ModelOption(value="anthropic/claude-opus-4.7", label="Claude Opus 4.7 (via AI/ML API)"),
+    ModelOption(value="anthropic/claude-haiku-4.5", label="Claude Haiku 4.5 (via AI/ML API)"),
+    ModelOption(value="google/gemini-3.8-flash", label="Gemini 3.8 Flash (via AI/ML API)"),
+    ModelOption(value="google/gemini-3.1-pro-preview", label="Gemini 3.1 Pro (via AI/ML API)"),
+    ModelOption(value="deepseek/deepseek-v4-pro", label="DeepSeek V4 Pro (via AI/ML API)"),
+    ModelOption(value="x-ai/grok-4-3", label="Grok 4.3 (via AI/ML API)"),
+    ModelOption(value="moonshotai/kimi-k2.5", label="Kimi K2.5 (via AI/ML API)"),
+    ModelOption(value="zhipu/glm-5.1", label="GLM 5.1 (via AI/ML API)"),
+    ModelOption(value="alibaba/qwen3.7-plus", label="Qwen3.7 Plus (via AI/ML API)"),
 )
 
 DEEPSEEK_MODELS = (
@@ -657,6 +677,19 @@ SUPPORTED_PROVIDERS = (
         legacy_model_env="TRUSTEDROUTER_MODEL",
         toolcall_model_env="TRUSTEDROUTER_TOOLCALL_MODEL",
         classification_model_env="TRUSTEDROUTER_CLASSIFICATION_MODEL",
+        allow_custom_models=True,
+    ),
+    ProviderOption(
+        value="aimlapi",
+        label="AI/ML API",
+        group="Hosted providers",
+        api_key_env=AIMLAPI_API_KEY_ENV,
+        model_env="AIMLAPI_REASONING_MODEL",
+        default_model=AIMLAPI_REASONING_MODEL,
+        models=AIMLAPI_MODELS,
+        legacy_model_env="AIMLAPI_MODEL",
+        toolcall_model_env="AIMLAPI_TOOLCALL_MODEL",
+        classification_model_env="AIMLAPI_CLASSIFICATION_MODEL",
         allow_custom_models=True,
     ),
     ProviderOption(

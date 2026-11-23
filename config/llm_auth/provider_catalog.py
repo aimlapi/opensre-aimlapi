@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from enum import StrEnum
 
 from config.constants.llm import (
+    AIMLAPI_API_KEY_ENV,
     ANTHROPIC_API_KEY_ENV,
     AZURE_OPENAI_API_KEY_ENV,
     AZURE_OPENAI_API_VERSION_ENV,
@@ -123,6 +124,17 @@ PROVIDER_SPECS: tuple[ProviderSpec, ...] = (
         legacy_model_env="TRUSTEDROUTER_MODEL",
         toolcall_model_env="TRUSTEDROUTER_TOOLCALL_MODEL",
         classification_model_env="TRUSTEDROUTER_CLASSIFICATION_MODEL",
+        allow_custom_models=True,
+    ),
+    ProviderSpec(
+        value="aimlapi",
+        label="AI/ML API",
+        credential_kind=CredentialKind.API_KEY,
+        api_key_env=AIMLAPI_API_KEY_ENV,
+        model_env="AIMLAPI_REASONING_MODEL",
+        legacy_model_env="AIMLAPI_MODEL",
+        toolcall_model_env="AIMLAPI_TOOLCALL_MODEL",
+        classification_model_env="AIMLAPI_CLASSIFICATION_MODEL",
         allow_custom_models=True,
     ),
     ProviderSpec(

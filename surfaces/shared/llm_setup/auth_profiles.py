@@ -38,12 +38,18 @@ _API_KEY_SETUP_URLS: dict[str, str] = {
     "openai": "https://platform.openai.com/api-keys",
     "openrouter": "https://openrouter.ai/keys",
     "trustedrouter": "https://trustedrouter.com/keys",
+    "aimlapi": "https://aimlapi.com/app/keys",
     "deepseek": "https://platform.deepseek.com/api_keys",
     "gemini": "https://aistudio.google.com/app/apikey",
     "nvidia": "https://build.nvidia.com/",
     "minimax": "https://intl.minimaxi.com/user-center/basic-information/interface-key",
     "groq": "https://console.groq.com/keys",
 }
+
+
+def api_key_setup_url(provider_value: str) -> str | None:
+    """Return the page where a user creates an API key for *provider_value*, if known."""
+    return _API_KEY_SETUP_URLS.get(provider_value)
 
 
 def _api_key_profiles() -> tuple[ProviderAuthProfile, ...]:
@@ -132,6 +138,7 @@ def provider_for_profile(profile: ProviderAuthProfile) -> ProviderOption:
 __all__ = [
     "AuthKind",
     "ProviderAuthProfile",
+    "api_key_setup_url",
     "iter_auth_profiles",
     "provider_for_profile",
     "resolve_auth_profile",
